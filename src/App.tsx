@@ -471,9 +471,9 @@ export default function Portfolio() {
               </button>
             </motion.div>
             <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px', marginTop: '60px' }}>
-              <span className="nav-link"><GithubIcon /></span>
-              <span className="nav-link"><LinkedinIcon /></span>
-              <span className="nav-link"><Mail /></span>
+              <a href="https://github.com/MadeByKillian" target="_blank" rel="noopener noreferrer" className="nav-link"><GithubIcon /></a>
+              <span className="nav-link" title="Discord: soyeskiki"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18.63 7A1.78 1.78 0 0 0 17 5.25c-1.3-.4-2.58-.73-3.8-.93L13 5.4a12.8 12.8 0 0 0-2 0l-.2-.93c-1.22.2-2.5.53-3.8.93a1.78 1.78 0 0 0-1.63 1.75c0 2.25.1 4.5.4 6.75a1.78 1.78 0 0 0 1.63 1.5 14 14 0 0 0 4.6.75l.4-1.25a7.3 7.3 0 0 1-2.4-.75c.1-.1.2-.2.3-.3a12.2 12.2 0 0 0 8.2 0c.1.1.2.2.3.3a7.3 7.3 0 0 1-2.4.75l.4 1.25a14 14 0 0 0 4.6-.75 1.78 1.78 0 0 0 1.63-1.5c.3-2.25.4-4.5.4-6.75Z"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg></span>
+              <a href="mailto:Killian.gauchetpro@gmail.com" className="nav-link"><Mail /></a>
             </motion.div>
           </motion.div>
 
