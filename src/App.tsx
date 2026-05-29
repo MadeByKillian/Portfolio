@@ -7,10 +7,12 @@ import {
   Network, 
   Cpu, 
   MapPin,
-  Globe
+  Globe,
+  Link as LinkIcon,
+  X
 } from 'lucide-react';
 
-// --- Types & Interfaces ---
+// --- Shared Types & Data ---
 interface Project {
   title: string;
   description: string;
@@ -44,6 +46,8 @@ export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [isBlobHovered, setIsBlobHovered] = useState(false);
+  const [showDiscordPopup, setShowDiscordPopup] = useState(false);
 
   // -- Dynamic Data Calculation --
   const currentYear = new Date().getFullYear();
@@ -98,7 +102,7 @@ export default function Portfolio() {
       .text-gradient { background: linear-gradient(to right, var(--violet), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
       .btn-glow { box-shadow: 0 0 20px rgba(123,47,255,0.4); transition: all 0.3s ease; }
       .btn-glow:hover { box-shadow: 0 0 30px rgba(123,47,255,0.6); transform: translateY(-2px); }
-      .nav-link { position: relative; text-decoration: none; color: var(--text-secondary); transition: color 0.3s; cursor: pointer; }
+      .nav-link { position: relative; text-decoration: none; color: var(--text-secondary); transition: color 0.3s; cursor: pointer; border: none; background: none; padding: 0; }
       .nav-link.active { color: var(--text-primary); }
       .nav-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: linear-gradient(to right, var(--violet), var(--blue)); transition: width 0.3s; }
       .nav-link.active::after { width: 100%; }
@@ -116,6 +120,33 @@ export default function Portfolio() {
 
   return (
     <div style={{ minHeight: '100vh', position: 'relative' }}>
+      <AnimatePresence>
+        {showDiscordPopup && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)' }}
+            onClick={() => setShowDiscordPopup(false)}
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="glass"
+              style={{ padding: '40px', borderRadius: '24px', textAlign: 'center', minWidth: '300px', position: 'relative' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button onClick={() => setShowDiscordPopup(false)} style={{ position: 'absolute', top: '15px', right: '15px', background: 'none', border: 'none', color: '#fff', cursor: 'pointer' }}><X size={20}/></button>
+              <DiscordIcon />
+              <h3 style={{ marginTop: '20px', marginBottom: '10px' }}>Mon Discord</h3>
+              <p className="text-gradient" style={{ fontSize: '1.5rem', fontWeight: 800 }}>soyeskiki</p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '10px' }}>Clique n'importe où pour fermer</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div style={{ position: 'fixed', inset: 0, zIndex: -1, overflow: 'hidden' }}>
         <motion.div animate={{ scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, -30, 0], rotate: [0, 10, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} style={{ position: 'absolute', top: '10%', right: '5%', width: '400px', height: '400px', background: 'linear-gradient(135deg, var(--violet), var(--blue))', borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%', filter: 'blur(80px)', opacity: 0.15 }} />
         <motion.div animate={{ scale: [1, 1.1, 1], x: [0, -40, 0], y: [0, 50, 0], rotate: [0, -15, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }} style={{ position: 'absolute', bottom: '10%', left: '5%', width: '300px', height: '300px', background: 'linear-gradient(135deg, var(--blue-dark), var(--violet-light))', borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%', filter: 'blur(60px)', opacity: 0.1 }} />
@@ -128,7 +159,7 @@ export default function Portfolio() {
           <span style={{ fontWeight: 700, fontSize: '1.2rem' }}>Killian Gauchet</span>
         </div>
         <div style={{ display: isMobile ? 'none' : 'flex', gap: '30px' }}>
-          {['Accueil', 'Projets', 'À propos', 'Compétences', 'Contact'].map(link => ( <a key={link} href={`#${link.toLowerCase().replace(' ', '-')}`} className={`nav-link ${activeSection === link.toLowerCase() ? 'active' : ''}`} onClick={() => setActiveSection(link.toLowerCase())} > {link} </a> ))}
+          {['Accueil', 'Projets', 'Liens', 'À propos', 'Compétences', 'Contact'].map(link => ( <a key={link} href={`#${link.toLowerCase().replace(' ', '-')}`} className={`nav-link ${activeSection === link.toLowerCase() ? 'active' : ''}`} onClick={() => setActiveSection(link.toLowerCase())} > {link} </a> ))}
         </div>
         {isMobile && ( <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer' }}> <div style={{ width: 30, height: 2, background: '#fff', marginBottom: 5 }} /> <div style={{ width: 30, height: 2, background: '#fff', marginBottom: 5 }} /> <div style={{ width: 30, height: 2, background: '#fff' }} /> </button> )}
       </nav>
@@ -145,26 +176,28 @@ export default function Portfolio() {
             </motion.div>
             <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px', marginTop: '60px' }}>
               <a href="https://github.com/MadeByKillian" target="_blank" rel="noopener noreferrer" className="nav-link"><GithubIcon /></a>
-              <span className="nav-link" title="Discord: soyeskiki"><DiscordIcon /></span>
+              <button onClick={() => setShowDiscordPopup(true)} className="nav-link" title="Discord: soyeskiki"><DiscordIcon /></button>
               <a href="mailto:Killian.gauchetpro@gmail.com" className="nav-link"><Mail /></a>
             </motion.div>
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.5 }} style={{ flex: 1, position: 'relative', display: 'flex', justifyContent: 'center' }} >
-            <div style={{ position: 'relative', width: isMobile ? '280px' : '400px', height: isMobile ? '280px' : '400px' }}>
+            <div style={{ position: 'relative', width: isMobile ? '280px' : '400px', height: isMobile ? '280px' : '400px' }} onMouseEnter={() => setIsBlobHovered(true)} onMouseLeave={() => setIsBlobHovered(false)}>
               <motion.div
                 animate={{
                   borderRadius: [ "60% 40% 30% 70% / 60% 30% 70% 40%", "30% 60% 70% 40% / 50% 60% 30% 60%", "50% 60% 30% 60% / 30% 40% 70% 50%", "40% 50% 60% 30% / 60% 40% 50% 40%", "60% 40% 30% 70% / 60% 30% 70% 40%" ],
-                  x: isMobile ? 0 : (mousePos.x - window.innerWidth / 2) * 0.05,
-                  y: isMobile ? 0 : (mousePos.y - window.innerHeight / 2) * 0.05,
+                  x: (isMobile || !isBlobHovered) ? 0 : (mousePos.x - window.innerWidth / 2) * 0.1,
+                  y: (isMobile || !isBlobHovered) ? 0 : (mousePos.y - window.innerHeight / 2) * 0.1,
+                  scale: isBlobHovered ? 1.05 : 1
                 }}
                 transition={{ 
                   borderRadius: { duration: 8, repeat: Infinity, ease: "easeInOut" },
                   x: { type: "spring", damping: 25, stiffness: 150 },
-                  y: { type: "spring", damping: 25, stiffness: 150 }
+                  y: { type: "spring", damping: 25, stiffness: 150 },
+                  scale: { duration: 0.3 }
                 }}
-                style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, var(--violet), var(--blue), var(--violet-light))', boxShadow: '0 0 60px rgba(123,47,255,0.4)' }}
+                style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, var(--violet), var(--blue), var(--violet-light))', boxShadow: '0 0 60px rgba(123,47,255,0.4)', cursor: 'help' }}
               />
-              <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ position: 'absolute', inset: -20, border: '1px dashed var(--violet)', borderRadius: '50%', opacity: 0.5 }} />
+              <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ position: 'absolute', inset: -20, border: '1px dashed var(--violet)', borderRadius: '50%', opacity: 0.5, pointerEvents: 'none' }} />
             </div>
           </motion.div>
         </section>
@@ -189,11 +222,34 @@ export default function Portfolio() {
                 <motion.div key={project.title} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} whileHover={{ y: -10 }} className="glass" style={{ padding: '30px', borderRadius: '24px', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }} >
                   <div style={{ position: 'absolute', top: '20px', right: '20px', padding: '4px 12px', borderRadius: '50px', background: project.semester === 'S1' ? 'var(--violet)' : 'var(--blue)', fontSize: '0.8rem', fontWeight: 800 }}> {project.semester} </div>
                   <div> <h3 style={{ fontSize: '1.5rem', marginBottom: '15px' }}>{project.title}</h3> <p style={{ color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '25px', fontSize: '0.95rem' }}>{project.description}</p> </div>
-                  <div> <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}> {project.technologies.map(tech => ( <span key={tech} style={{ fontSize: '0.75rem', padding: '4px 10px', borderRadius: '4px', border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.03)' }}>{tech}</span> ))} </div> <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> <span style={{ fontSize: '0.8rem', color: 'var(--violet)', fontWeight: 700 }}>#{project.tag}</span> <GithubIcon /> </div> </div>
+                  <div> <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}> {project.technologies.map(tech => ( <span key={tech} style={{ fontSize: '0.75rem', padding: '4px 10px', borderRadius: '4px', border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.03)' }}>{tech}</span> ))} </div> <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> <span style={{ fontSize: '0.8rem', color: 'var(--violet)', fontWeight: 700 }}>#{project.tag}</span> </div> </div>
                 </motion.div>
               ))}
             </AnimatePresence>
           </motion.div>
+        </section>
+
+        {/* -- Links Section -- */}
+        <section id="liens" style={{ marginBottom: '150px' }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '40px' }}>Liens ✦</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(350px, 1fr))', gap: '30px' }}>
+            <motion.a 
+              href="https://killiangauchet.github.io/WebDoc-HeartBleed/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.02 }}
+              className="glass"
+              style={{ padding: '30px', borderRadius: '24px', display: 'flex', alignItems: 'center', gap: '20px', textDecoration: 'none', color: '#fff' }}
+            >
+              <div style={{ width: '60px', height: '60px', background: 'rgba(123,47,255,0.1)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--violet)' }}>
+                <LinkIcon size={30} />
+              </div>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '1.2rem' }}>WebDoc - HeartBleed</h3>
+                <p style={{ margin: '5px 0 0', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Documentation interactive sur la faille OpenSSL.</p>
+              </div>
+            </motion.a>
+          </div>
         </section>
 
         <section id="à-propos" style={{ marginBottom: '150px', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '100px', alignItems: 'center' }}>
@@ -252,7 +308,7 @@ export default function Portfolio() {
       <footer className="glass" style={{ padding: '60px 5% 40px', borderTop: '1px solid var(--glass-border)', textAlign: 'center' }}>
         <div style={{ width: '50px', height: '50px', background: 'var(--bg-deep)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontWeight: 800, color: 'var(--violet)', border: '1px solid var(--violet)', boxShadow: '0 0 15px rgba(123,47,255,0.4)' }}>KG</div>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '30px' }}>© {currentYear} Killian Gauchet — BUT Informatique</p>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap' }}> <a href="#accueil" className="nav-link">Accueil</a> <a href="#projets" className="nav-link">Projets</a> <a href="#à-propos" className="nav-link">À propos</a> <a href="#contact" className="nav-link">Contact</a> </div>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap' }}> <a href="#accueil" className="nav-link">Accueil</a> <a href="#projets" className="nav-link">Projets</a> <a href="#liens" className="nav-link">Liens</a> <a href="#à-propos" className="nav-link">À propos</a> <a href="#contact" className="nav-link">Contact</a> </div>
         <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, var(--glass-border), transparent)', margin: '40px 0' }}></div>
         <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.2)' }}>Killian Gauchet © {currentYear}</p>
       </footer>
