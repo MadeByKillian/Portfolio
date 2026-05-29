@@ -55,12 +55,6 @@ export default function Portfolio() {
 
   // -- Dynamic Data Calculation --
   const currentYear = new Date().getFullYear();
-  const yearData = {
-    year: 1,
-    age: 19,
-    label: "1ère année (S2)",
-    semester: "S2",
-  };
 
   // -- Projects Data --
   const allProjects: Project[] = [
