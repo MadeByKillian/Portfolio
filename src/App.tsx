@@ -1,24 +1,18 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring, useInView } from 'framer-motion';
+import { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence, useSpring, type Variants } from 'framer-motion';
 import { 
-  Github, 
-  Linkedin, 
   Mail, 
-  ExternalLink, 
   Code2, 
   Database, 
   Network, 
   Cpu, 
   GraduationCap, 
   Calendar, 
-  ChevronRight, 
   Download,
-  Terminal,
   Layers,
-  Search,
-  Users,
   Briefcase,
-  MapPin
+  MapPin,
+  Globe
 } from 'lucide-react';
 
 // --- Types & Interfaces ---
@@ -37,6 +31,15 @@ interface Competence {
   description: string;
   levels: number[];
 }
+
+// Custom Brand Icons (since Lucide removed them)
+const GithubIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5-.73 1.02-1.08 2.25-1 3.5 0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+);
+
+const LinkedinIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+);
 
 // --- Main Component ---
 export default function Portfolio() {
@@ -194,11 +197,6 @@ export default function Portfolio() {
 
       * {
         box-sizing: border-box;
-        cursor: none !important;
-      }
-
-      @media (max-width: 768px) {
-        * { cursor: auto !important; }
       }
 
       body {
@@ -240,6 +238,7 @@ export default function Portfolio() {
         text-decoration: none;
         color: var(--text-secondary);
         transition: color 0.3s;
+        cursor: pointer;
       }
       .nav-link.active {
         color: var(--text-primary);
@@ -291,7 +290,7 @@ export default function Portfolio() {
     cursorY.set(mousePos.y);
   }, [mousePos, cursorX, cursorY]);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
@@ -299,9 +298,13 @@ export default function Portfolio() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }
+    visible: { 
+      y: 0, 
+      opacity: 1, 
+      transition: { duration: 0.6, ease: "easeOut" } 
+    }
   };
 
   return (
@@ -442,7 +445,7 @@ export default function Portfolio() {
 
         {/* Burger for Mobile (Simplified) */}
         {isMobile && (
-          <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: 'none', border: 'none', color: '#fff' }}>
+          <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer' }}>
             <div style={{ width: 30, height: 2, background: '#fff', marginBottom: 5 }} />
             <div style={{ width: 30, height: 2, background: '#fff', marginBottom: 5 }} />
             <div style={{ width: 30, height: 2, background: '#fff' }} />
@@ -469,7 +472,7 @@ export default function Portfolio() {
           >
             <motion.p variants={itemVariants} style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '10px' }}>
               Étudiant BUT Informatique — <span className="text-gradient" style={{ fontWeight: 700 }}>{yearData.label}</span>
-              {yearIndex === 1 && ` • Recherche de stage d${yearData.stage.startWeek}`}
+              {yearIndex === 1 && ` • Recherche de stage d'${yearData.stage.startWeek}`}
             </motion.p>
             <motion.h1 variants={itemVariants} style={{ fontSize: isMobile ? '2.5rem' : '4.5rem', fontWeight: 800, lineHeight: 1.1, margin: '20px 0' }}>
               Je construis des applications qui ont du <span className="text-gradient">sens.</span>
@@ -485,7 +488,8 @@ export default function Portfolio() {
                 background: 'linear-gradient(to right, var(--violet), var(--blue))',
                 color: '#fff',
                 fontWeight: 700,
-                fontSize: '1rem'
+                fontSize: '1rem',
+                cursor: 'pointer'
               }}>
                 Voir mes projets
               </button>
@@ -497,15 +501,16 @@ export default function Portfolio() {
                 color: '#fff',
                 fontWeight: 600,
                 fontSize: '1rem',
-                backdropFilter: 'blur(10px)'
+                backdropFilter: 'blur(10px)',
+                cursor: 'pointer'
               }}>
                 Me contacter
               </button>
             </motion.div>
             <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px', marginTop: '60px' }}>
-              <Github className="nav-link" size={24} />
-              <Linkedin className="nav-link" size={24} />
-              <Mail className="nav-link" size={24} />
+              <span className="nav-link"><GithubIcon /></span>
+              <span className="nav-link"><LinkedinIcon /></span>
+              <span className="nav-link"><Mail /></span>
             </motion.div>
           </motion.div>
 
@@ -565,7 +570,7 @@ export default function Portfolio() {
               style={{ padding: '30px', borderRadius: '20px', textAlign: 'center' }}
             >
               <h3 className="text-gradient" style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0 }}>{stat.value}</h3>
-              <p style={{ color: var(--text-secondary), margin: '10px 0 0', fontWeight: 500 }}>{stat.label}</p>
+              <p style={{ color: 'var(--text-secondary)', margin: '10px 0 0', fontWeight: 500 }}>{stat.label}</p>
             </motion.div>
           ))}
         </section>
@@ -610,7 +615,7 @@ export default function Portfolio() {
             }}
           >
             <AnimatePresence mode="popLayout">
-              {visibleProjects.map((project, i) => (
+              {visibleProjects.map((project) => (
                 <motion.div
                   key={project.title}
                   layout
@@ -643,7 +648,7 @@ export default function Portfolio() {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.8rem', color: 'var(--violet)', fontWeight: 700 }}>#{project.tag}</span>
-                      <Github size={20} style={{ opacity: 0.5 }} />
+                      <GithubIcon />
                     </div>
                   </div>
                 </motion.div>
@@ -770,7 +775,7 @@ export default function Portfolio() {
                     <span style={{ color: 'var(--text-secondary)' }}>Dès le 13 avril</span>
                   </div>
                   <p style={{ color: 'var(--text-secondary)', marginBottom: '30px' }}>Je recherche un stage de 10 à 12 semaines pour mettre en œuvre mes compétences en développement au sein d'une équipe professionnelle.</p>
-                  <button style={{ background: 'transparent', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700 }}>Me contacter pour le stage →</button>
+                  <button style={{ background: 'transparent', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, cursor: 'pointer' }}>Me contacter pour le stage →</button>
                 </div>
 
                 <div className="glass" style={{ padding: '40px', borderRadius: '24px' }}>
@@ -780,7 +785,7 @@ export default function Portfolio() {
                   </div>
                   <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Alternance envisageable</h3>
                   <p style={{ color: 'var(--text-secondary)', marginBottom: '30px' }}>Ouvert à une opportunité en alternance durant les périodes de vacances scolaires pour approfondir mon expérience.</p>
-                  <button style={{ background: 'transparent', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700 }}>En discuter →</button>
+                  <button style={{ background: 'transparent', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, cursor: 'pointer' }}>En discuter →</button>
                 </div>
               </div>
             </>
@@ -802,7 +807,7 @@ export default function Portfolio() {
                     <div style={{ color: 'var(--text-secondary)' }}>Formation</div>
                   </div>
                 </div>
-                <button style={{ background: 'transparent', border: '1px solid var(--glass-border)', color: '#fff', padding: '14px 28px', borderRadius: '10px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                <button style={{ background: 'transparent', border: '1px solid var(--glass-border)', color: '#fff', padding: '14px 28px', borderRadius: '10px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
                   <Download size={20} /> Télécharger le planning
                 </button>
               </div>
@@ -869,7 +874,8 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   fontWeight: 800,
                   fontSize: '1.1rem',
-                  marginTop: '10px'
+                  marginTop: '10px',
+                  cursor: 'pointer'
                 }}>Envoyer le message →</button>
               </form>
             </div>
@@ -904,6 +910,9 @@ export default function Portfolio() {
         <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, var(--glass-border), transparent)', margin: '40px 0' }}></div>
         <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.2)' }}>Conçu avec React & Framer Motion</p>
       </footer>
+
+      {/* Fallback for Globe Icon */}
+      <div style={{ display: 'none' }}><Globe /></div>
 
     </div>
   );
