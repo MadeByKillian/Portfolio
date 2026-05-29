@@ -326,7 +326,7 @@ export default function Portfolio() {
               <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Stage obligatoire</h3>
               <div style={{ color: 'var(--text-secondary)', marginBottom: '20px', fontSize: '0.95rem' }}>
                 <p>• Durée : 10 à 12 semaines</p>
-                <p>• Période : Dès le 13 avril 2025</p>
+                <p>• Période : Dès le 13 avril 2027</p>
               </div>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>Je recherche activement un stage pour ma 1ère année afin de mettre en pratique mes compétences en développement et cybersécurité.</p>
               <button onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})} style={{ background: 'transparent', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, cursor: 'pointer' }}>Me contacter pour le stage →</button>
@@ -339,7 +339,7 @@ export default function Portfolio() {
                 <div style={{ background: 'rgba(0,212,255,0.2)', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '4px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 800 }}>Recherche active</div>
               </div>
               <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Alternance BUT 2 & 3</h3>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>Je recherche également un contrat d'alternance pour mes deux prochaines années afin de parfaire ma formation en milieu professionnel.</p>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>En deuxième année, je suis disponible pour travailler uniquement durant les vacances scolaires. Pour ma troisième année, je recherche un contrat d'alternance classique pour parfaire ma formation en milieu professionnel.</p>
               <a href={`${import.meta.env.BASE_URL}calendrier_alternance_2026-2027.pdf`} target="_blank" style={{ background: 'transparent', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                 <Calendar size={18} /> Voir le calendrier prévisionnel
               </a>
@@ -357,7 +357,7 @@ export default function Portfolio() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}> <MapPin color="var(--violet)" /> <span>France</span> </div>
                 <div style={{ marginTop: '20px' }}> 
                   <div style={{ display: 'inline-block', padding: '8px 16px', borderRadius: '8px', background: 'rgba(34, 197, 94, 0.1)', border: '1px solid #22c55e', color: '#22c55e', fontWeight: 700, fontSize: '0.9rem' }}> 
-                    🟢 Disponible en stage dès le 13 avril
+                    🟢 Disponible en stage dès le 13 avril 2027
                   </div> 
                 </div>
               </div>
