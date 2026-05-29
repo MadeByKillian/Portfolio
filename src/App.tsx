@@ -11,6 +11,7 @@ import {
   Link as LinkIcon,
   X,
   Calendar,
+  GraduationCap,
   Briefcase,
   Download,
   Layers,
@@ -57,19 +58,20 @@ export default function Portfolio() {
 
   // -- Dynamic Data Calculation --
   const currentYear = new Date().getFullYear();
-  const yearIndex = Math.min(Math.max(currentYear - 2024, 0), 2);
+  // Fixed at 1st year (S2) as requested for the user profile
+  const yearIndex = 0; 
   const yearData = {
-    year: yearIndex + 1,
-    age: 19 + yearIndex,
-    label: ["1ère année", "2ème année", "3ème année"][yearIndex],
-    semester: ["S1-S2", "S3-S4", "S5-S6"][yearIndex],
+    year: 1,
+    age: 19,
+    label: "1ère année (S2)",
+    semester: "S2",
     stage: {
-      available: yearIndex <= 1,
+      available: true,
       startWeek: "13 avril",
       duration: "10 à 12 semaines"
     },
     alternance: {
-      type: yearIndex === 1 ? "vacances" : yearIndex === 2 ? "contrat" : null,
+      type: null,
       weeksEntreprise: 27,
       weeksFormation: 16
     }
@@ -87,18 +89,16 @@ export default function Portfolio() {
     { title: "Exploitation Qualité Air", description: "SAÉ S2.04 — Analyse statistique de données.", technologies: ["SQL", "Python", "Matplotlib"], tag: "BDD", semester: "S2", minYear: 1 }
   ];
 
-  const visibleProjects = allProjects
-    .filter(p => yearData.year >= p.minYear)
-    .filter(p => activeFilter === 'Tous' || p.tag === activeFilter);
+  const visibleProjects = allProjects.filter(p => activeFilter === 'Tous' || p.tag === activeFilter);
 
   // -- Competences --
   const competences: Competence[] = [
-    { id: 'C1', label: 'Réaliser', description: 'Concevoir, coder, tester et intégrer une solution informatique', levels: [35, 65, 85] },
-    { id: 'C2', label: 'Optimiser', description: 'Proposer des applications optimisées selon des critères spécifiques', levels: [35, 60, 80] },
-    { id: 'C3', label: 'Administrer', description: 'Installer, configurer et maintenir des infrastructures communicantes', levels: [30, 55, 75] },
-    { id: 'C4', label: 'Gérer les données', description: 'Concevoir, gérer et exploiter les données de l\'entreprise', levels: [35, 65, 85] },
-    { id: 'C5', label: 'Conduire un projet', description: 'Organiser et piloter un projet avec méthodes classiques ou agiles', levels: [25, 55, 80] },
-    { id: 'C6', label: 'Travailler en équipe', description: 'Développer les aptitudes pour travailler efficacement en équipe', levels: [30, 60, 85] },
+    { id: 'C1', label: 'Réaliser', description: 'Concevoir, coder, tester et intégrer une solution informatique', levels: [35] },
+    { id: 'C2', label: 'Optimiser', description: 'Proposer des applications optimisées selon des critères spécifiques', levels: [35] },
+    { id: 'C3', label: 'Administrer', description: 'Installer, configurer et maintenir des infrastructures communicantes', levels: [30] },
+    { id: 'C4', label: 'Gérer les données', description: 'Concevoir, gérer et exploiter les données de l\'entreprise', levels: [35] },
+    { id: 'C5', label: 'Conduire un projet', description: 'Organiser et piloter un projet avec méthodes classiques ou agiles', levels: [25] },
+    { id: 'C6', label: 'Travailler en équipe', description: 'Développer les aptitudes pour travailler efficacement en équipe', levels: [30] },
   ];
 
   const stars = useMemo(() => Array.from({ length: 40 }, (_, i) => ({ id: i, top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, delay: Math.random() * 5, size: Math.random() * 2 + 1 })), []);
@@ -188,7 +188,7 @@ export default function Portfolio() {
         <section id="accueil" style={{ minHeight: '80vh', display: 'flex', flexDirection: isMobile ? 'column-reverse' : 'row', alignItems: 'center', gap: '40px', marginBottom: '100px' }}>
           <motion.div initial="hidden" animate="visible" variants={containerVariants} style={{ flex: 1.2 }}>
             <motion.p variants={itemVariants} style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '10px' }}> Étudiant BUT Informatique — <span className="text-gradient" style={{ fontWeight: 700 }}>
-              {yearData.year === 1 ? '1ère année' : yearData.year === 2 ? 'En recherche de stage · Dès le 13 avril' : 'En alternance · 3ème année'}
+              {yearData.year === 1 ? '1ère année (S2)' : yearData.year === 2 ? 'En recherche de stage · Dès le 13 avril' : 'En alternance · 3ème année'}
             </span> </motion.p>
             <motion.h1 variants={itemVariants} style={{ fontSize: isMobile ? '2.5rem' : '4.5rem', fontWeight: 800, lineHeight: 1.1, margin: '20px 0' }}> Je construis des applications qui ont du <span className="text-gradient">sens.</span> </motion.h1>
             <motion.p variants={itemVariants} style={{ fontSize: '1.2rem', maxWidth: '600px', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '40px' }}> Passionné par le développement, je conçois des solutions web et logicielles modernes, propres et performantes pour répondre aux enjeux de demain. </motion.p>
@@ -225,7 +225,7 @@ export default function Portfolio() {
         </section>
 
         <section style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '20px', marginBottom: '100px' }}>
-          {[ { label: 'Projets réalisés', value: yearIndex === 0 ? 4 : yearIndex === 1 ? 8 : '12+' }, { label: 'Semestres validés', value: yearIndex === 0 ? 1 : yearIndex === 1 ? 3 : 5 }, { label: 'Spécialité', value: 'Cybersecurité' } ].map((stat, i) => (
+          {[ { label: 'Projets réalisés', value: 8 }, { label: 'Semestres validés', value: 1 }, { label: 'Spécialité', value: 'Cybersecurité' } ].map((stat, i) => (
             <motion.div key={i} whileHover={{ y: -5 }} className="glass" style={{ padding: '30px', borderRadius: '20px', textAlign: 'center' }} >
               <h3 className="text-gradient" style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0 }}>{stat.value}</h3>
               <p style={{ color: 'var(--text-secondary)', margin: '10px 0 0', fontWeight: 500 }}>{stat.label}</p>
@@ -298,21 +298,20 @@ export default function Portfolio() {
               <img src="/toulouse.png" alt="Toulouse" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, var(--bg-deep))', opacity: 0.6 }} />
             </motion.div>
-            <motion.div animate={{ y: [0, 15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} style={{ width: '100px', height: '100px', borderRadius: '50%', backgroundImage: 'linear-gradient(var(--bg-deep), var(--bg-deep)), linear-gradient(to right, var(--violet), var(--blue))', backgroundClip: 'padding-box, border-box', border: '2px solid transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 800, color: '#fff', boxShadow: '0 0 30px rgba(123,47,255,0.3)', marginTop: '-50px', zIndex: 2 }} > KG </motion.div>
+            <motion.div animate={{ y: [0, 15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} style={{ width: '120px', height: '120px', borderRadius: '50%', background: '#03040a', border: '3px solid var(--violet)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(123,47,255,0.3)', marginTop: '-60px', zIndex: 2 }} >
+              <img src="/pdp .jpg" alt="Killian Gauchet" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </motion.div>
           </div>
           <div style={{ flex: 1.5 }}>
             <span style={{ color: 'var(--violet)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '2px' }}>À propos</span>
             <h2 style={{ fontSize: isMobile ? '2rem' : '3rem', margin: '20px 0' }}>Passionné par le code, la tech et les belles expériences.</h2>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '30px' }}> 
-              {yearIndex === 0 && "En 1ère année de BUT Informatique, je découvre les fondamentaux du développement, de l'algorithmique et des bases de données. Chaque projet est une nouvelle opportunité d'apprendre et de construire quelque chose de concret."}
-              {yearIndex === 1 && "En 2ème année de BUT Informatique, je monte en compétence sur le développement d'applications, les systèmes et la gestion de données. Je recherche activement un stage pour mettre en pratique mes acquis en situation professionnelle."}
-              {yearIndex === 2 && "En 3ème année de BUT Informatique, j'alterne entre l'entreprise et la formation pour développer une expertise technique solide."}
+              En 1ère année de BUT Informatique (S2), je découvre les fondamentaux du développement, de l'algorithmique et des bases de données. Chaque projet est une nouvelle opportunité d'apprendre et de construire quelque chose de concret. Mon parcours est guidé par l'envie de créer des outils performants qui apportent une réelle valeur ajoutée.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '40px' }}>
               {[ { icon: <Code2 />, label: "Dév. Web" }, { icon: <Cpu />, label: "Algo" }, { icon: <Database />, label: "Données" }, { icon: <Network />, label: "Systèmes" } ].map((item, i) => ( <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)' }}> <div style={{ color: 'var(--violet)' }}>{item.icon}</div> <span style={{ fontWeight: 500 }}>{item.label}</span> </div> ))}
             </div>
             
-            {/* Download Documents */}
             <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
               <a href="/CV alternance Killian Gauchet.pdf" target="_blank" className="glass" style={{ padding: '12px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
                 <FileText size={18} color="var(--violet)" /> Mon CV
@@ -340,69 +339,34 @@ export default function Portfolio() {
         <section id="disponibilités" style={{ marginBottom: '150px' }}>
           <h2 style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '60px' }}>Disponibilités & Opportunités</h2>
           
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : (yearData.year <= 2 ? 'repeat(2, 1fr)' : '1fr'), gap: '30px' }}>
-            {/* Stage mandatory card (Visible years 1 and 2) */}
-            {yearData.year <= 2 && (
-              <motion.div whileHover={{ y: -5 }} className="glass" style={{ padding: '40px', borderRadius: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px' }}>
-                  <Search size={32} color="var(--violet)" />
-                  <div style={{ background: 'rgba(123,47,255,0.2)', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '4px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 800 }}>Recherche active</div>
-                </div>
-                <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Stage obligatoire</h3>
-                <div style={{ color: 'var(--text-secondary)', marginBottom: '20px', fontSize: '0.95rem' }}>
-                  <p>• Durée : 10 à 12 semaines</p>
-                  <p>• Période : Dès le 13 avril {yearData.year === 1 ? '2025' : '2026'}</p>
-                </div>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>Je recherche un stage pour mettre en pratique mes compétences en développement et cybersécurité au sein d'une équipe professionnelle.</p>
-                <button onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})} style={{ background: 'transparent', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, cursor: 'pointer' }}>Me contacter pour le stage →</button>
-              </motion.div>
-            )}
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '30px' }}>
+            {/* Stage mandatory card */}
+            <motion.div whileHover={{ y: -5 }} className="glass" style={{ padding: '40px', borderRadius: '24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px' }}>
+                <Search size={32} color="var(--violet)" />
+                <div style={{ background: 'rgba(123,47,255,0.2)', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '4px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 800 }}>Recherche active</div>
+              </div>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Stage obligatoire</h3>
+              <div style={{ color: 'var(--text-secondary)', marginBottom: '20px', fontSize: '0.95rem' }}>
+                <p>• Durée : 10 à 12 semaines</p>
+                <p>• Période : Dès le 13 avril 2025</p>
+              </div>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>Je recherche activement un stage pour ma 1ère année afin de mettre en pratique mes compétences en développement et cybersécurité.</p>
+              <button onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})} style={{ background: 'transparent', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, cursor: 'pointer' }}>Me contacter pour le stage →</button>
+            </motion.div>
 
-            {/* Alternance section (Always visible or year-dependent) */}
-            {yearData.year === 1 ? (
-              <motion.div whileHover={{ y: -5 }} className="glass" style={{ padding: '40px', borderRadius: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px' }}>
-                  <Layers size={32} color="var(--blue)" />
-                  <div style={{ background: 'rgba(0,212,255,0.2)', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '4px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 800 }}>À venir</div>
-                </div>
-                <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Alternance BUT 2 & 3</h3>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>Je serai ouvert à des opportunités en alternance dès ma deuxième année pour approfondir mon expérience en entreprise.</p>
-                <a href="/CALENDRIERS Alternance_BUT 3 2026-2027.pdf" target="_blank" style={{ background: 'transparent', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                  <Calendar size={18} /> Voir le calendrier prévisionnel
-                </a>
-              </motion.div>
-            ) : yearData.year === 2 ? (
-               <motion.div whileHover={{ y: -5 }} className="glass" style={{ padding: '40px', borderRadius: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px' }}>
-                  <Briefcase size={32} color="var(--blue)" />
-                  <div style={{ background: 'rgba(0,212,255,0.2)', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '4px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 800 }}>Recherche active</div>
-                </div>
-                <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Alternance 3ème année</h3>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>Je recherche un contrat d'alternance pour ma dernière année de BUT Informatique afin de concilier formation et immersion professionnelle.</p>
-                <a href="/CALENDRIERS Alternance_BUT 3 2026-2027.pdf" target="_blank" style={{ background: 'transparent', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                  <Calendar size={18} /> Voir le calendrier de présence
-                </a>
-              </motion.div>
-            ) : yearData.year === 3 ? (
-              <motion.div whileHover={{ y: -5 }} className="glass" style={{ padding: '60px', borderRadius: '32px', textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}>
-                <Briefcase size={48} color="var(--blue)" style={{ marginBottom: '20px' }} />
-                <h3 style={{ fontSize: '2rem', marginBottom: '10px' }}>Contrat d'alternance — 3ème année</h3>
-                <div style={{ display: 'inline-block', background: 'var(--blue)', color: '#fff', padding: '6px 20px', borderRadius: '50px', fontSize: '0.9rem', fontWeight: 800, marginBottom: '30px' }}>En alternance</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', maxWidth: '400px', margin: '0 auto 40px' }}>
-                  <div className="glass" style={{ padding: '20px', borderRadius: '16px' }}>
-                    <div style={{ fontWeight: 800, fontSize: '1.5rem' }}>27 sem.</div>
-                    <div style={{ color: 'var(--text-secondary)' }}>Entreprise</div>
-                  </div>
-                  <div className="glass" style={{ padding: '20px', borderRadius: '16px' }}>
-                    <div style={{ fontWeight: 800, fontSize: '1.5rem' }}>16 sem.</div>
-                    <div style={{ color: 'var(--text-secondary)' }}>Formation</div>
-                  </div>
-                </div>
-                <a href="/CALENDRIERS Alternance_BUT 3 2026-2027.pdf" target="_blank" style={{ background: 'transparent', border: '1px solid var(--glass-border)', color: '#fff', padding: '14px 28px', borderRadius: '10px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-                  <Download size={20} /> Télécharger le planning
-                </a>
-              </motion.div>
-            ) : null}
+            {/* Alternance section */}
+            <motion.div whileHover={{ y: -5 }} className="glass" style={{ padding: '40px', borderRadius: '24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px' }}>
+                <Layers size={32} color="var(--blue)" />
+                <div style={{ background: 'rgba(0,212,255,0.2)', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '4px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 800 }}>Recherche active</div>
+              </div>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Alternance BUT 2 & 3</h3>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>Je recherche également un contrat d'alternance pour mes deux prochaines années afin de parfaire ma formation en milieu professionnel.</p>
+              <a href="/CALENDRIERS Alternance_BUT 3 2026-2027.pdf" target="_blank" style={{ background: 'transparent', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <Calendar size={18} /> Voir le calendrier prévisionnel
+              </a>
+            </motion.div>
           </div>
         </section>
 
@@ -415,10 +379,8 @@ export default function Portfolio() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}> <Mail color="var(--violet)" /> <span>Killian.gauchetpro@gmail.com</span> </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}> <MapPin color="var(--violet)" /> <span>France</span> </div>
                 <div style={{ marginTop: '20px' }}> 
-                  <div style={{ display: 'inline-block', padding: '8px 16px', borderRadius: '8px', background: yearIndex === 0 ? 'rgba(255,255,255,0.05)' : yearIndex === 1 ? 'rgba(34, 197, 94, 0.1)' : 'rgba(59, 130, 246, 0.1)', border: '1px solid ' + (yearIndex === 0 ? 'rgba(255,255,255,0.1)' : yearIndex === 1 ? '#22c55e' : '#3b82f6'), color: yearIndex === 0 ? '#94a3b8' : yearIndex === 1 ? '#22c55e' : '#3b82f6', fontWeight: 700, fontSize: '0.9rem' }}> 
-                    {yearIndex === 0 && "🎓 En formation"}
-                    {yearIndex === 1 && "🟢 Disponible en stage dès le 13 avril"}
-                    {yearIndex === 2 && "🔵 En alternance"}
+                  <div style={{ display: 'inline-block', padding: '8px 16px', borderRadius: '8px', background: 'rgba(34, 197, 94, 0.1)', border: '1px solid #22c55e', color: '#22c55e', fontWeight: 700, fontSize: '0.9rem' }}> 
+                    🟢 Disponible en stage dès le 13 avril
                   </div> 
                 </div>
               </div>
