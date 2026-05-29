@@ -11,7 +11,6 @@ import {
   Link as LinkIcon,
   X,
   Calendar,
-  GraduationCap,
   Briefcase,
   Download,
   Layers,
@@ -65,7 +64,7 @@ export default function Portfolio() {
     label: ["1ère année", "2ème année", "3ème année"][yearIndex],
     semester: ["S1-S2", "S3-S4", "S5-S6"][yearIndex],
     stage: {
-      available: yearIndex <= 1, // Available in 1st and 2nd year
+      available: yearIndex <= 1,
       startWeek: "13 avril",
       duration: "10 à 12 semaines"
     },
@@ -121,7 +120,7 @@ export default function Portfolio() {
       h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
       .glass { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); }
       .text-gradient { background: linear-gradient(to right, var(--violet), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-      .btn-glow { box-shadow: 0 0 20px rgba(123,47,255,0.4), 0 0 40px rgba(0,212,255,0.2); transition: all 0.3s ease; }
+      .btn-glow { box-shadow: 0 0 20px rgba(123,47,255,0.4); transition: all 0.3s ease; }
       .btn-glow:hover { box-shadow: 0 0 30px rgba(123,47,255,0.6); transform: translateY(-2px); }
       .nav-link { position: relative; text-decoration: none; color: var(--text-secondary); transition: color 0.3s; cursor: pointer; border: none; background: none; padding: 0; }
       .nav-link.active { color: var(--text-primary); }
@@ -298,10 +297,10 @@ export default function Portfolio() {
             
             {/* Download Documents */}
             <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-              <a href="/CV alternance Killian Gauchet.pdf" download className="glass" style={{ padding: '12px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
+              <a href="/CV alternance Killian Gauchet.pdf" target="_blank" className="glass" style={{ padding: '12px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
                 <FileText size={18} color="var(--violet)" /> Mon CV
               </a>
-              <a href="/Lettre motivation Killian Gauchet.pdf" download className="glass" style={{ padding: '12px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
+              <a href="/Lettre motivation Killian Gauchet.pdf" target="_blank" className="glass" style={{ padding: '12px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
                 <FileText size={18} color="var(--blue)" /> Lettre de motivation
               </a>
             </div>
@@ -324,7 +323,7 @@ export default function Portfolio() {
         <section id="disponibilités" style={{ marginBottom: '150px' }}>
           <h2 style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '60px' }}>Disponibilités & Opportunités</h2>
           
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : (yearData.year === 1 ? 'repeat(2, 1fr)' : '1fr'), gap: '30px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : (yearData.year <= 2 ? 'repeat(2, 1fr)' : '1fr'), gap: '30px' }}>
             {/* Stage mandatory card (Visible years 1 and 2) */}
             {yearData.year <= 2 && (
               <motion.div whileHover={{ y: -5 }} className="glass" style={{ padding: '40px', borderRadius: '24px' }}>
@@ -355,6 +354,18 @@ export default function Portfolio() {
                   <Calendar size={18} /> Voir le calendrier prévisionnel
                 </a>
               </motion.div>
+            ) : yearData.year === 2 ? (
+               <motion.div whileHover={{ y: -5 }} className="glass" style={{ padding: '40px', borderRadius: '24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px' }}>
+                  <Briefcase size={32} color="var(--blue)" />
+                  <div style={{ background: 'rgba(0,212,255,0.2)', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '4px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 800 }}>Recherche active</div>
+                </div>
+                <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Alternance 3ème année</h3>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>Je recherche un contrat d'alternance pour ma dernière année de BUT Informatique afin de concilier formation et immersion professionnelle.</p>
+                <a href="/CALENDRIERS Alternance_BUT 3 2026-2027.pdf" target="_blank" style={{ background: 'transparent', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  <Calendar size={18} /> Voir le calendrier de présence
+                </a>
+              </motion.div>
             ) : yearData.year === 3 ? (
               <motion.div whileHover={{ y: -5 }} className="glass" style={{ padding: '60px', borderRadius: '32px', textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}>
                 <Briefcase size={48} color="var(--blue)" style={{ marginBottom: '20px' }} />
@@ -370,7 +381,7 @@ export default function Portfolio() {
                     <div style={{ color: 'var(--text-secondary)' }}>Formation</div>
                   </div>
                 </div>
-                <a href="/CALENDRIERS Alternance_BUT 3 2026-2027.pdf" download style={{ background: 'transparent', border: '1px solid var(--glass-border)', color: '#fff', padding: '14px 28px', borderRadius: '10px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+                <a href="/CALENDRIERS Alternance_BUT 3 2026-2027.pdf" target="_blank" style={{ background: 'transparent', border: '1px solid var(--glass-border)', color: '#fff', padding: '14px 28px', borderRadius: '10px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
                   <Download size={20} /> Télécharger le planning
                 </a>
               </motion.div>
