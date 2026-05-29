@@ -11,9 +11,6 @@ import {
   Link as LinkIcon,
   X,
   Calendar,
-  GraduationCap,
-  Briefcase,
-  Download,
   Layers,
   FileText,
   Search
@@ -58,23 +55,11 @@ export default function Portfolio() {
 
   // -- Dynamic Data Calculation --
   const currentYear = new Date().getFullYear();
-  // Fixed at 1st year (S2) as requested for the user profile
-  const yearIndex = 0; 
   const yearData = {
     year: 1,
     age: 19,
     label: "1ère année (S2)",
     semester: "S2",
-    stage: {
-      available: true,
-      startWeek: "13 avril",
-      duration: "10 à 12 semaines"
-    },
-    alternance: {
-      type: null,
-      weeksEntreprise: 27,
-      weeksFormation: 16
-    }
   };
 
   // -- Projects Data --
@@ -187,9 +172,7 @@ export default function Portfolio() {
       <main style={{ padding: '0 5%', paddingTop: '100px' }}>
         <section id="accueil" style={{ minHeight: '80vh', display: 'flex', flexDirection: isMobile ? 'column-reverse' : 'row', alignItems: 'center', gap: '40px', marginBottom: '100px' }}>
           <motion.div initial="hidden" animate="visible" variants={containerVariants} style={{ flex: 1.2 }}>
-            <motion.p variants={itemVariants} style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '10px' }}> Étudiant BUT Informatique — <span className="text-gradient" style={{ fontWeight: 700 }}>
-              {yearData.year === 1 ? '1ère année (S2)' : yearData.year === 2 ? 'En recherche de stage · Dès le 13 avril' : 'En alternance · 3ème année'}
-            </span> </motion.p>
+            <motion.p variants={itemVariants} style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '10px' }}> Étudiant BUT Informatique — <span className="text-gradient" style={{ fontWeight: 700 }}>1ère année (S2)</span> </motion.p>
             <motion.h1 variants={itemVariants} style={{ fontSize: isMobile ? '2.5rem' : '4.5rem', fontWeight: 800, lineHeight: 1.1, margin: '20px 0' }}> Je construis des applications qui ont du <span className="text-gradient">sens.</span> </motion.h1>
             <motion.p variants={itemVariants} style={{ fontSize: '1.2rem', maxWidth: '600px', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '40px' }}> Passionné par le développement, je conçois des solutions web et logicielles modernes, propres et performantes pour répondre aux enjeux de demain. </motion.p>
             <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
@@ -328,8 +311,8 @@ export default function Portfolio() {
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '60px' }}>
             {competences.map((comp) => (
               <div key={comp.id}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}> <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>{comp.id} · {comp.label}</span> <span className="text-gradient" style={{ fontWeight: 800 }}>{comp.levels[yearIndex]}%</span> </div>
-                <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}> <motion.div initial={{ width: 0 }} whileInView={{ width: `${comp.levels[yearIndex]}%` }} transition={{ duration: 1.5, ease: "easeOut" }} style={{ height: '100%', background: 'linear-gradient(to right, var(--violet), var(--blue))' }} /> </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}> <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>{comp.id} · {comp.label}</span> <span className="text-gradient" style={{ fontWeight: 800 }}>35%</span> </div>
+                <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}> <motion.div initial={{ width: 0 }} whileInView={{ width: '35%' }} transition={{ duration: 1.5, ease: "easeOut" }} style={{ height: '100%', background: 'linear-gradient(to right, var(--violet), var(--blue))' }} /> </div>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '10px' }}>{comp.description}</p>
               </div>
             ))}
