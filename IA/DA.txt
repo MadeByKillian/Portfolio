@@ -1,0 +1,26 @@
+Description du Style Visuel (Charte Graphique)
+Atmosphère globale : Un univers immersif, mystérieux et haut de gamme. Le design repose sur un contraste élevé entre un fond sombre profond (bleus nuit/noirs) et des éléments lumineux éthérés.
+
+Éléments graphiques (Le "Glassmorphism") : Le point central est l'utilisation de formes organiques 3D fluides, semblables à du mercure ou du verre liquide, avec des reflets irisés (tons violets, bleus électriques et blancs). Ces formes semblent flotter, créant une profondeur de champ importante.
+
+Typographie : Utilisation d'une police Sans-Serif moderne, épurée et très lisible (style géométrique ou humaniste). La hiérarchie est claire : titres imposants et très aérés, corps de texte minimaliste.
+
+Palette de couleurs :
+
+Fond : Dégradés de noir profond et de bleu nuit très sombre.
+
+Accents : Blanc pur pour la typographie.
+
+Lumières : Violet électrique, bleu néon et reflets "iridescents" pour donner l'aspect vitreux.
+
+Interface utilisateur (UI) :
+
+Boutons et conteneurs : Utilisation de l'effet "Frosted Glass" (verre dépoli) avec un léger flou d'arrière-plan, des bordures très fines et lumineuses.
+
+Interactivité : Présence de petits détails comme des étoiles ou des éclats lumineux pour ajouter du dynamisme.
+
+Disposition : Très "grid-based" (structurée), avec beaucoup d'espace négatif (whitespace) pour laisser respirer le contenu.
+
+comprennent mieux) :
+
+"Web design hero section, dark mode, futuristic glassmorphism style. Central 3D fluid organic liquid shape with iridescent blue and violet reflections. Frosted glass buttons with soft glow. Minimalist clean typography, high-end tech aesthetic, 8k resolution, cinematic lighting, sleek interface layout."

@@ -1,0 +1,6 @@
+/* Reset and base styles moved to App.tsx style tag for single file compliance */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}

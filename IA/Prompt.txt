@@ -1,0 +1,464 @@
+🎯 CONTEXTE
+Tu es un expert en développement React. Crée un portfolio web complet en React (JSX, fichier unique, default export) pour un étudiant en BUT Informatique. Utilise useState et useEffect depuis React pour les interactions. Tout le CSS est en inline styles ou via un <style> tag injecté dans le head.
+
+👤 DONNÉES PERSONNELLES
+Nom : Gauchet
+Prénom : Killian
+Année de base : 2024-2025 = 1ère année = 19 ans
+Formation : Bachelor Universitaire de Technologie — Informatique
+Département Informatique — IUT
+Parcours : Réalisation d'applications : conception, développement, validation (Parcours A)
+Email : killian.gauchet@email.com
+Localisation : France
+⚠️ RÈGLE DYNAMIQUE — ANNÉES
+Utilise new Date().getFullYear() pour calculer l'année courante et construire un objet yearData :
+jsconst currentYear = new Date().getFullYear()
+const yearIndex = currentYear - 2024 // 0 = 1ère, 1 = 2ème, 2 = 3ème
+const yearData = {
+  year: Math.min(Math.max(yearIndex + 1, 1), 3), // clamp 1-3
+  age: 19 + yearIndex,
+  label: ["1ère année", "2ème année", "3ème année"][yearIndex],
+  semester: ["S1-S2", "S3-S4", "S5-S6"][yearIndex],
+  stage: {
+    available: yearIndex === 1,
+    startWeek: "13 avril",
+    duration: "10 à 12 semaines"
+  },
+  alternance: {
+    type: yearIndex === 1 ? "vacances" : yearIndex === 2 ? "contrat" : null,
+    weeksEntreprise: 27,
+    weeksFormation: 16
+  }
+}
+
+🎨 CHARTE GRAPHIQUE — DA EXACTE
+
+Référence : Web design hero section, dark mode, futuristic glassmorphism style. Central 3D fluid organic liquid shape with iridescent blue and violet reflections. Frosted glass buttons with soft glow. Minimalist clean typography, high-end tech aesthetic, cinematic lighting, sleek interface layout.
+
+Fond
+cssbackground: linear-gradient(135deg, #03040a 0%, #050818 50%, #0a0f2e 100%);
+Palette
+RôleValeurViolet électrique#7b2fff, #a855f7Bleu néon#00d4ff, #3b82f6Texte principal#ffffffTexte secondaire#94a3b8Fond cartergba(255,255,255,0.05)Bordure cartergba(255,255,255,0.1)
+Typographie
+
+Titres : 'Syne', sans-serif — import Google Fonts
+Corps : 'DM Sans', sans-serif — import Google Fonts
+h1 : 5rem, weight 700
+h2 : 3rem, weight 700
+Corps : 1rem, weight 300
+
+css@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+Effets visuels OBLIGATOIRES
+1. Blobs organiques animés (hero — minimum 2)
+css.blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  background: linear-gradient(135deg, #7b2fff, #00d4ff, #a855f7);
+  filter: blur(1px);
+  opacity: 0.85;
+  animation: morphBlob 8s ease-in-out infinite;
+}
+2. Frosted Glass sur toutes les cartes
+cssbackground: rgba(255, 255, 255, 0.05);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 16px;
+3. Étoiles scintillantes (fond)
+Génère 40 <div> positionnés aléatoirement en position: absolute, petits cercles blancs semi-transparents, animation twinkle (opacity 0→1→0, délai aléatoire entre 0 et 5s).
+4. Glow sur boutons principaux
+cssbox-shadow: 0 0 20px rgba(123,47,255,0.5), 0 0 40px rgba(0,212,255,0.2);
+5. Cursor personnalisé
+Petit cercle blanc (20px) qui suit la souris via useEffect + mousemove, avec transition: transform 0.1s ease.
+Keyframes CSS — tous obligatoires
+css@keyframes morphBlob {
+  0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(0,0) rotate(0deg); }
+  25%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: translate(10px,-15px) rotate(5deg); }
+  50%  { border-radius: 50% 60% 30% 60% / 30% 40% 70% 50%; transform: translate(-5px,10px) rotate(-3deg); }
+  75%  { border-radius: 40% 50% 60% 30% / 60% 40% 50% 40%; transform: translate(8px,-5px) rotate(4deg); }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(0,0) rotate(0deg); }
+}
+
+@keyframes morphBlob2 {
+  0%   { border-radius: 40% 60% 60% 40% / 40% 50% 60% 50%; transform: translate(0,0) rotate(0deg); }
+  33%  { border-radius: 60% 40% 40% 60% / 60% 40% 50% 40%; transform: translate(-10px,15px) rotate(-5deg); }
+  66%  { border-radius: 50% 50% 30% 70% / 40% 60% 40% 60%; transform: translate(5px,-10px) rotate(3deg); }
+  100% { border-radius: 40% 60% 60% 40% / 40% 50% 60% 50%; transform: translate(0,0) rotate(0deg); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50%       { opacity: 0.8; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(123,47,255,0.4); }
+  50%       { box-shadow: 0 0 40px rgba(0,212,255,0.6), 0 0 60px rgba(123,47,255,0.3); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+🧭 NAVIGATION
+Barre fixe en haut, glassmorphism :
+
+Logo : KG dans un cercle avec box-shadow: 0 0 15px rgba(123,47,255,0.6), fond violet foncé
+Liens : Accueil · Projets · À propos · Compétences · Disponibilités · Contact
+Lien actif : underline dégradé violet→bleu animé
+Burger pour mobile
+Scroll listener : met à jour le lien actif via IntersectionObserver
+
+
+📄 SECTIONS
+
+1. HERO
+Layout : 2 colonnes — texte gauche, blob droite
+Colonne gauche :
+
+Sous-titre animé (fadeInUp, délai 0.2s) :
+
+1ère année → Étudiant BUT Informatique — 1ère année
+2ème année → Étudiant BUT Informatique — En recherche de stage · Dès le 13 avril
+3ème année → Étudiant BUT Informatique — En alternance · 3ème année
+
+
+Titre principal (fadeInUp, délai 0.4s) : Je construis des applications qui ont du sens. — le mot sens. en dégradé violet→bleu
+Description (fadeInUp, délai 0.6s) : Passionné par le développement, je conçois des solutions web et logicielles modernes, propres et performantes.
+2 boutons (fadeInUp, délai 0.8s) :
+
+Voir mes projets → (fond dégradé violet→bleu, glow animé)
+Me contacter (ghost, bordure blanche fine, hover glow blanc)
+
+
+Icônes réseaux sociaux : GitHub · LinkedIn · Email (petites, grises, hover blanc)
+
+Colonne droite :
+
+Grand blob principal (400x400px) animation morphBlob 8s
+Petit blob secondaire (150x150px) en haut à droite, animation morphBlob2 6s
+Cercle décoratif rotatif autour du blob (bordure pointillée, animation rotateSlow 20s)
+
+Bas du hero :
+
+Texte Scroll ↓ avec animation scrollBounce
+
+
+2. STATS / CHIFFRES CLÉS
+Bande horizontale, 3 métriques en cartes glassmorphism :
+Métrique1ère année2ème année3ème annéeProjets réalisés4812+Semestres validés135SpécialitéParcours AParcours AParcours A
+Chaque carte : grand chiffre en dégradé violet→bleu, label en gris dessous.
+
+3. PROJETS
+Titre : Projets + petit ✦ décoratif
+Filtres pills glassmorphism : Tous · Développement · Algorithmique · Système · BDD
+
+Filtre actif : fond dégradé violet→bleu
+Filtre inactif : fond transparent, bordure fine
+
+Projets — Semestre 1 (toujours visibles dès 1ère année) :
+Annuaire Numérique
+SAÉ S1.01 — Compétence 1 : Réaliser
+Application de gestion de contacts avec saisie, modification et consultation structurée des données.
+Technologies : Python · C
+Tag : Développement
+Badge : S1 (violet)
+Comparaison d'Algorithmes de Tri
+SAÉ S1.02 — Compétence 2 : Optimiser
+Implémentation et benchmark de plusieurs algorithmes de tri (bulles, fusion, rapide). Mesures de performance comparatives.
+Technologies : Python
+Tag : Algorithmique
+Badge : S1 (violet)
+Installation Poste de Développement
+SAÉ S1.03 — Compétence 3 : Administrer
+Dual-boot Linux/Windows, configuration complète d'un environnement de développement avec outils et notice d'installation.
+Technologies : Linux · Bash · Git · VirtualBox
+Tag : Système
+Badge : S1 (violet)
+Base de Données — Processus de Vente
+SAÉ S1.04 — Compétence 4 : Gérer les données
+Modélisation et création d'une BDD relationnelle pour un processus de vente. Conception du MCD et script SQL.
+Technologies : SQL · MySQL · Looping
+Tag : BDD
+Badge : S1 (violet)
+Projets — Semestre 2 (visibles dès 2ème année) :
+Application de Gestion IUT
+SAÉ S2.01 — Compétence 1 : Réaliser
+Application desktop avec IHM complète pour la gestion des étudiants et des notes. Architecture Modèle/Vue séparée.
+Technologies : Java · JavaFX
+Tag : Développement
+Badge : S2 (bleu)
+Exploration Algorithmique — Graphes
+SAÉ S2.02 — Compétence 2 : Optimiser
+Résolution d'un problème de coloriage de carte modélisé sous forme de graphe. Comparaison de plusieurs approches.
+Technologies : Python · NetworkX
+Tag : Algorithmique
+Badge : S2 (bleu)
+Déploiement Stack Web Apache-PHP-MySQL
+SAÉ S2.03 — Compétence 3 : Administrer
+Installation et configuration complète d'un serveur web sur VM Linux. Documentation et tests de déploiement.
+Technologies : Apache · PHP · MySQL · Linux
+Tag : Système
+Badge : S2 (bleu)
+Exploitation BDD — Qualité de l'Air
+SAÉ S2.04 — Compétence 4 : Gérer les données
+Création d'une BDD à partir d'un jeu de données environnemental, analyse statistique et visualisation des résultats.
+Technologies : SQL · Python · Matplotlib
+Tag : BDD
+Badge : S2 (bleu)
+Règle d'affichage dynamique :
+
+1ère année → S1 uniquement (4 projets)
+2ème année → S1 + S2 (8 projets)
+3ème année → S1 + S2 + carte spéciale Projet Tutoré en cours — S5/S6 avec badge animé En cours
+
+Style des cartes projets :
+
+Glassmorphism
+Hover : transform: translateY(-8px), glow latéral violet
+Badge semestre en haut à droite
+Pills technos en bas
+Icône GitHub fictif (non fonctionnel, visuel uniquement)
+
+
+4. À PROPOS
+Layout : 2 colonnes
+Colonne gauche :
+
+Blob décoratif (petit, animation float)
+Cercle avatar avec initiales KG stylisées, bordure dégradé violet→bleu, glow
+
+Colonne droite :
+
+Label : À propos
+Titre : Passionné par le code, la tech et les belles expériences.
+Texte dynamique selon l'année :
+
+1ère : En 1ère année de BUT Informatique, je découvre les fondamentaux du développement, de l'algorithmique et des bases de données. Chaque projet est une nouvelle opportunité d'apprendre et de construire quelque chose de concret.
+2ème : En 2ème année de BUT Informatique, je monte en compétence sur le développement d'applications, les systèmes et la gestion de données. Je recherche activement un stage pour mettre en pratique mes acquis en situation professionnelle.
+3ème : En 3ème année de BUT Informatique, j'alterne entre l'entreprise et la formation pour développer une expertise technique solide. Je suis capable de travailler en autonomie sur des projets complexes.
+
+
+4 domaines (icônes SVG simples + label) :
+
+Développement Web
+Algorithmique
+Bases de Données
+Systèmes & Réseaux
+
+
+
+
+5. COMPÉTENCES
+Titre : Compétences
+6 compétences officielles BUT Informatique :
+#CompétenceDescriptionC1RéaliserConcevoir, coder, tester et intégrer une solution informatiqueC2OptimiserProposer des applications optimisées selon des critères spécifiquesC3AdministrerInstaller, configurer et maintenir des infrastructures communicantesC4Gérer les donnéesConcevoir, gérer et exploiter les données de l'entrepriseC5Conduire un projetOrganiser et piloter un projet avec méthodes classiques ou agilesC6Travailler en équipeDévelopper les aptitudes pour travailler efficacement en équipe
+Niveaux de progression dynamiques :
+Compétence1ère année2ème année3ème annéeC1 Réaliser35%65%85%C2 Optimiser35%60%80%C3 Administrer30%55%75%C4 Gérer données35%65%85%C5 Conduire projet25%55%80%C6 Travailler équipe30%60%85%
+Style des barres : animation au scroll via IntersectionObserver — width passe de 0 à la valeur cible avec transition: width 1.5s ease.
+Technologies maîtrisées (pills glassmorphism) :
+AnnéeTechnologies1èrePython · C · HTML · CSS · SQL · Bash · Git · Linux2ème+ Java · JavaFX · PHP · MySQL · JavaScript · React3ème+ TypeScript · Node.js · Docker · APIs REST
+
+6. DISPONIBILITÉS & OPPORTUNITÉS
+
+⚠️ Section dynamique complète — affichage conditionnel selon yearData.year
+
+Si 1ère année :
+Petite carte glassmorphism neutre :
+
+Icône 🎓
+Texte : Actuellement en 1ère année de BUT Informatique. Les opportunités de stage et d'alternance seront disponibles dès la 2ème année.
+Badge gris : En formation
+
+
+Si 2ème année :
+Titre de section : Disponibilités & Opportunités
+Deux cartes côte à côte en glassmorphism :
+Carte 1 — Stage :
+
+Icône calendrier SVG
+Titre : Stage obligatoire
+Badge vert pulsant : Disponible
+Infos :
+
+Durée : 10 à 12 semaines
+Début : Semaine du 13 avril
+Cadre : 2ème année BUT Informatique
+
+
+Texte : Je suis à la recherche d'un stage de 10 à 12 semaines débutant la semaine du 13 avril, dans le cadre de ma 2ème année de BUT Informatique.
+Bouton ghost : Me contacter pour le stage →
+
+Carte 2 — Alternance :
+
+Icône rotation/cycle SVG
+Titre : Alternance envisageable
+Badge orange : Sous conditions
+Infos :
+
+Rythme : Périodes de vacances scolaires uniquement
+
+
+Texte : Je suis également ouvert à une opportunité en alternance, avec la contrainte de pouvoir travailler uniquement durant les périodes de vacances scolaires.
+Bouton ghost : En discuter →
+
+
+Si 3ème année :
+Titre de section : Disponibilités & Opportunités
+Une grande carte glassmorphism centrée :
+
+Icône bâtiment/entreprise SVG
+Titre : Contrat d'alternance — 3ème année
+Badge bleu animé (glow) : En alternance
+Texte intro : Ma 3ème année se déroule en alternance selon un planning prévisionnel indicatif. Ce calendrier organise ma présence entre l'entreprise et la formation.
+
+Mini-tableau glassmorphism intégré dans la carte :
+Semaines🏢 En entreprise27 semaines🎓 En formation16 semaines
+
+Note italique grisée : Calendrier prévisionnel indicatif, susceptible d'ajustements.
+Bouton ghost : Télécharger le planning (non fonctionnel, visuel uniquement, icône download)
+
+
+7. CONTACT
+Layout : 2 colonnes
+Colonne gauche :
+
+Blob décoratif animé
+Infos de contact :
+
+📧 killian.gauchet@email.com
+📍 France
+Badge de disponibilité dynamique :
+
+1ère → badge gris : En formation
+2ème → badge vert : Disponible en stage dès le 13 avril — 10 à 12 semaines
+3ème → badge bleu : En alternance — 27 sem. entreprise / 16 sem. formation
+
+
+
+
+Icônes réseaux : GitHub · LinkedIn
+
+Colonne droite :
+Formulaire glassmorphism :
+
+Champs : Nom, Email, Message (textarea)
+Style inputs :
+
+cssbackground: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 12px;
+color: #ffffff;
+padding: 14px 16px;
+
+Focus : border-color: rgba(123,47,255,0.6); box-shadow: 0 0 20px rgba(123,47,255,0.2)
+Bouton Envoyer le message → : fond dégradé violet→bleu, glow animé
+
+
+8. FOOTER
+
+Texte : © {année dynamique} Killian Gauchet — BUT Informatique
+Liens rapides
+Petit blob décoratif minuscule
+Séparateur ligne fine dégradé violet→bleu→transparent
+
+
+⚙️ COMPORTEMENTS TECHNIQUES
+ComportementImplémentationScroll smoothscrollIntoView({ behavior: 'smooth' })Section active navIntersectionObserver sur chaque sectionApparition au scrollIntersectionObserver + classe visible → fadeInUpCursor personnaliséuseEffect + mousemove + div rond blancFiltres projetsuseState sur tag actifBarres compétencesIntersectionObserver + transition: width 1.5s easeStars/particulesArray de 40 objets générés au useMemo avec position et délai aléatoiresAnnée dynamiqueyearData calculé depuis new Date().getFullYear()
+
+📐 STRUCTURE DU COMPOSANT
+jsxexport default function Portfolio() {
+
+  // ── États ──────────────────────────────────────
+  const [activeSection, setActiveSection] = useState('accueil')
+  const [activeFilter, setActiveFilter] = useState('Tous')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [visibleSections, setVisibleSections] = useState({})
+  const [skillsVisible, setSkillsVisible] = useState(false)
+
+  // ── Données dynamiques ─────────────────────────
+  const currentYear = new Date().getFullYear()
+  const yearIndex = Math.min(Math.max(currentYear - 2024, 0), 2)
+  const yearData = {
+    year: yearIndex + 1,
+    age: 19 + yearIndex,
+    label: ["1ère année", "2ème année", "3ème année"][yearIndex],
+    stage: { available: yearIndex === 1, startWeek: "13 avril", duration: "10 à 12 semaines" },
+    alternance: { type: yearIndex === 1 ? "vacances" : yearIndex === 2 ? "contrat" : null, weeksEntreprise: 27, weeksFormation: 16 }
+  }
+
+  // ── Projets filtrés selon l'année ──────────────
+  const allProjects = [ /* S1 + S2 */ ]
+  const visibleProjects = allProjects
+    .filter(p => yearData.year >= p.minYear)
+    .filter(p => activeFilter === 'Tous' || p.tag === activeFilter)
+
+  // ── Compétences avec niveaux dynamiques ────────
+  const competences = [ /* C1 à C6 avec levels[yearIndex] */ ]
+
+  // ── Technologies selon l'année ─────────────────
+  const techStacks = [ /* par année */ ]
+
+  // ── Stars mémorisées ───────────────────────────
+  const stars = useMemo(() =>
+    Array.from({ length: 40 }, (_, i) => ({
+      id: i,
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      delay: Math.random() * 5,
+      size: Math.random() * 3 + 1
+    })), []
+  )
+
+  // ── useEffect : cursor, observers, styles ──────
+  useEffect(() => {
+    // Injecter keyframes CSS dans <head>
+    // Cursor personnalisé
+    // IntersectionObserver pour sections
+    // IntersectionObserver pour compétences
+  }, [])
+
+  return (
+    <div style={{ background: 'linear-gradient(135deg, #03040a, #050818, #0a0f2e)', minHeight: '100vh', fontFamily: "'DM Sans', sans-serif", color: '#ffffff', position: 'relative', overflow: 'hidden' }}>
+
+      {/* Cursor personnalisé */}
+      {/* Étoiles */}
+      {/* Navigation */}
+      {/* Hero */}
+      {/* Stats */}
+      {/* Projets */}
+      {/* À propos */}
+      {/* Compétences */}
+      {/* Disponibilités */}
+      {/* Contact */}
+      {/* Footer */}
+
+    </div>
+  )
+}
+
+🚫 CONTRAINTES ABSOLUES
+
+Pas de bibliothèques externes sauf React (useState, useEffect, useMemo)
+Tout le CSS en inline styles ou <style> tag injecté dans document.head via useEffect
+Google Fonts via @import dans le style tag
+Fichier JSX unique, default export, aucune prop requise
+Pas de localStorage, pas de position: fixed sur des éléments qui casseraient le rendu
+Pas d'images réelles — dégradés CSS et formes SVG uniquement
+Cursor personnalisé désactivé sur mobile (détecter via window.innerWidth < 768)
+Le composant doit être immédiatement fonctionnel sans configuration supplémentaire
