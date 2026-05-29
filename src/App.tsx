@@ -268,7 +268,24 @@ export default function Portfolio() {
               </div>
               <div>
                 <h3 style={{ margin: 0, fontSize: '1.2rem' }}>WebDoc - HeartBleed</h3>
-                <p style={{ margin: '5px 0 0', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Documentation interactive sur la faille OpenSSL.</p>
+                <p style={{ margin: '5px 0 0', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Projet d'école : Documentation interactive sur la faille OpenSSL.</p>
+              </div>
+            </motion.a>
+
+            <motion.a 
+              href="https://github.com/MadeByKillian" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.02 }}
+              className="glass"
+              style={{ padding: '30px', borderRadius: '24px', display: 'flex', alignItems: 'center', gap: '20px', textDecoration: 'none', color: '#fff' }}
+            >
+              <div style={{ width: '60px', height: '60px', background: 'rgba(255,255,255,0.05)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                <GithubIcon />
+              </div>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '1.2rem' }}>GitHub</h3>
+                <p style={{ margin: '5px 0 0', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Découvrez l'ensemble de mes dépôts et mon code source.</p>
               </div>
             </motion.a>
           </div>
