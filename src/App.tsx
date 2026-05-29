@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence, useSpring, type Variants } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { 
   Mail, 
   Code2, 
@@ -47,7 +47,6 @@ export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState('Tous');
   const [activeSection, setActiveSection] = useState('accueil');
   const [menuOpen, setMenuOpen] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
 
   // -- Dynamic Data Calculation --
@@ -171,13 +170,6 @@ export default function Portfolio() {
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isMobile) {
-        setMousePos({ x: e.clientX, y: e.clientY });
-      }
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-
     // Dynamic styles injection
     const styleTag = document.createElement('style');
     styleTag.innerHTML = `
@@ -275,20 +267,9 @@ export default function Portfolio() {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
       document.head.removeChild(styleTag);
     };
   }, [isMobile]);
-
-  // -- Framer Motion Configs --
-  const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
-  const cursorX = useSpring(mousePos.x, springConfig);
-  const cursorY = useSpring(mousePos.y, springConfig);
-
-  useEffect(() => {
-    cursorX.set(mousePos.x);
-    cursorY.set(mousePos.y);
-  }, [mousePos, cursorX, cursorY]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -379,24 +360,6 @@ export default function Portfolio() {
           />
         ))}
       </div>
-
-      {/* -- Custom Cursor -- */}
-      {!isMobile && (
-        <motion.div
-          style={{
-            position: 'fixed',
-            width: 20,
-            height: 20,
-            borderRadius: '50%',
-            background: '#fff',
-            pointerEvents: 'none',
-            zIndex: 9999,
-            x: cursorX,
-            y: cursorY,
-            mixBlendMode: 'difference'
-          }}
-        />
-      )}
 
       {/* -- Navigation -- */}
       <nav className="glass" style={{
@@ -690,7 +653,7 @@ export default function Portfolio() {
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '30px' }}>
               {yearIndex === 0 && "En 1ère année de BUT Informatique, je découvre les fondamentaux du développement, de l'algorithmique et des bases de données. Chaque projet est une nouvelle opportunité d'apprendre et de construire quelque chose de concret."}
               {yearIndex === 1 && "En 2ème année de BUT Informatique, je monte en compétence sur le développement d'applications, les systèmes et la gestion de données. Je recherche activement un stage pour mettre en pratique mes acquis en situation professionnelle."}
-              {yearIndex === 2 && "En 3ème année de BUT Informatique, j'alterne entre l'entreprise et la formation pour développer une expertise technique solide. Je suis capable de travailler en autonomie sur des projets complexes."}
+              {yearIndex === 2 && "En 3ème année de BUT Informatique, j'alterne entre l'entreprise et la formation pour dÃ©velopper une expertise technique solide. Je suis capable de travailler en autonomie sur des projets complexes."}
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
               {[
