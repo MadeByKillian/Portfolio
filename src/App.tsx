@@ -1,16 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence, useSpring, type Variants } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { 
   Mail, 
   Code2, 
   Database, 
   Network, 
   Cpu, 
-  GraduationCap, 
-  Calendar, 
-  Download,
-  Layers,
-  Briefcase,
   MapPin,
   Globe
 } from 'lucide-react';
@@ -52,23 +47,10 @@ export default function Portfolio() {
 
   // -- Dynamic Data Calculation --
   const currentYear = new Date().getFullYear();
-  // Fixed to 1st year (S2) as requested
-  const yearIndex = 0; 
   const yearData = {
     year: 1,
-    age: 19,
     label: "1ère année (S2)",
     semester: "S2",
-    stage: {
-      available: false,
-      startWeek: "13 avril",
-      duration: "10 à 12 semaines"
-    },
-    alternance: {
-      type: null,
-      weeksEntreprise: 27,
-      weeksFormation: 16
-    }
   };
 
   // -- Projects Data --
