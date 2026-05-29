@@ -172,7 +172,7 @@ export default function Portfolio() {
       <main style={{ padding: '0 5%', paddingTop: '100px' }}>
         <section id="accueil" style={{ minHeight: '80vh', display: 'flex', flexDirection: isMobile ? 'column-reverse' : 'row', alignItems: 'center', gap: '40px', marginBottom: '100px' }}>
           <motion.div initial="hidden" animate="visible" variants={containerVariants} style={{ flex: 1.2 }}>
-            <motion.p variants={itemVariants} style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '10px' }}> Étudiant BUT Informatique — <span className="text-gradient" style={{ fontWeight: 700 }}>{yearData.label}</span> </motion.p>
+            <motion.p variants={itemVariants} style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '10px' }}> Étudiant BUT Informatique — <span className="text-gradient" style={{ fontWeight: 700 }}>1ère année (S2)</span> </motion.p>
             <motion.h1 variants={itemVariants} style={{ fontSize: isMobile ? '2.5rem' : '4.5rem', fontWeight: 800, lineHeight: 1.1, margin: '20px 0' }}> Je construis des applications qui ont du <span className="text-gradient">sens.</span> </motion.h1>
             <motion.p variants={itemVariants} style={{ fontSize: '1.2rem', maxWidth: '600px', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '40px' }}> Passionné par le développement, je conçois des solutions web et logicielles modernes, propres et performantes pour répondre aux enjeux de demain. </motion.p>
             <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
@@ -278,11 +278,11 @@ export default function Portfolio() {
           <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
             <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} style={{ color: 'var(--blue)', fontWeight: 800, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '3px' }}>Toulouse</motion.span>
             <motion.div animate={{ y: [0, -15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="glass" style={{ width: isMobile ? '280px' : '350px', height: isMobile ? '200px' : '250px', borderRadius: '24px', overflow: 'hidden', position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }} >
-              <img src="/toulouse.png" alt="Toulouse" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} />
+              <img src="toulouse.png" alt="Toulouse" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, var(--bg-deep))', opacity: 0.6 }} />
             </motion.div>
             <motion.div animate={{ y: [0, 15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} style={{ width: '120px', height: '120px', borderRadius: '50%', background: '#03040a', border: '3px solid var(--violet)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(123,47,255,0.3)', marginTop: '-60px', zIndex: 2 }} >
-              <img src="/pdp .jpg" alt="Killian Gauchet" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src="pdp.jpg" alt="Killian Gauchet" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </motion.div>
           </div>
           <div style={{ flex: 1.5 }}>
@@ -296,10 +296,10 @@ export default function Portfolio() {
             </div>
             
             <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-              <a href="/CV alternance Killian Gauchet.pdf" target="_blank" className="glass" style={{ padding: '12px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
+              <a href="CV alternance Killian Gauchet.pdf" target="_blank" className="glass" style={{ padding: '12px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
                 <FileText size={18} color="var(--violet)" /> Mon CV
               </a>
-              <a href="/Lettre motivation Killian Gauchet.pdf" target="_blank" className="glass" style={{ padding: '12px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
+              <a href="Lettre motivation Killian Gauchet.pdf" target="_blank" className="glass" style={{ padding: '12px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 600 }}>
                 <FileText size={18} color="var(--blue)" /> Lettre de motivation
               </a>
             </div>
@@ -346,7 +346,7 @@ export default function Portfolio() {
               </div>
               <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>Alternance BUT 2 & 3</h3>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>Je recherche également un contrat d'alternance pour mes deux prochaines années afin de parfaire ma formation en milieu professionnel.</p>
-              <a href="/CALENDRIERS Alternance_BUT 3 2026-2027.pdf" target="_blank" style={{ background: 'transparent', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              <a href="CALENDRIERS Alternance_BUT 3 2026-2027.pdf" target="_blank" style={{ background: 'transparent', border: '1px solid var(--blue)', color: 'var(--blue)', padding: '12px 24px', borderRadius: '10px', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                 <Calendar size={18} /> Voir le calendrier prévisionnel
               </a>
             </motion.div>
