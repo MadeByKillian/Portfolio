@@ -14,8 +14,7 @@ import {
   GraduationCap,
   Briefcase,
   Download,
-  Layers,
-  ArrowRight
+  Layers
 } from 'lucide-react';
 
 // --- Shared Types & Data ---
